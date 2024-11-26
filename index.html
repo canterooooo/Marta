@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Per la Marta 💖</title>
+    <title>Per a Marta 💖</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -48,6 +48,11 @@
             display: none;
             color: #333;
         }
+        .time-counter {
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: #555;
+        }
         button {
             margin-top: 15px;
             padding: 10px 20px;
@@ -76,7 +81,8 @@
     <div class="container">
         <h1>Per a Marta 💖</h1>
         <div class="heart" onclick="showMessage()">❤️</div>
-        <p class="message">Ets el meu món. Gràcies per fer la meva vida màgica! ✨</p>
+        <p class="message">Ets la millor t'estimo! ✨</p>
+        <p class="time-counter"></p>
         <button onclick="launchConfetti()">Fes clic per una sorpresa 🎉</button>
     </div>
     <canvas class="confetti"></canvas>
@@ -85,10 +91,27 @@
         const message = document.querySelector('.message');
         const confettiCanvas = document.querySelector('.confetti');
         const ctx = confettiCanvas.getContext('2d');
+        const timeCounter = document.querySelector('.time-counter');
 
         function showMessage() {
             message.style.display = 'block';
         }
+
+        // Funció per calcular el temps des de l'inici de la relació
+        function calculateTime() {
+            const startDate = new Date('2024-01-10T00:00:00');
+            const now = new Date();
+            const diff = now - startDate;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            timeCounter.textContent = `Portem junts: ${days} dies, ${hours} hores, ${minutes} minuts i ${seconds} segons.`;
+        }
+
+        setInterval(calculateTime, 1000);
 
         // Configuració de confeti
         let confettis = [];
@@ -133,3 +156,4 @@
     </script>
 </body>
 </html>
+
