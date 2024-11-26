@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Per la Marta 💖</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            color: #e63946;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .heart {
+            font-size: 4em;
+            color: #e63946;
+            cursor: pointer;
+            animation: beat 1s infinite;
+        }
+        @keyframes beat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+        .message {
+            font-size: 1.2em;
+            margin-top: 20px;
+            display: none;
+            color: #333;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #e63946;
+            border: none;
+            color: white;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #d62828;
+        }
+        .confetti {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Per a Marta 💖</h1>
+        <div class="heart" onclick="showMessage()">❤️</div>
+        <p class="message">Ets el meu món. Gràcies per fer la meva vida màgica! ✨</p>
+        <button onclick="launchConfetti()">Fes clic per una sorpresa 🎉</button>
+    </div>
+    <canvas class="confetti"></canvas>
+
+    <script>
+        const message = document.querySelector('.message');
+        const confettiCanvas = document.querySelector('.confetti');
+        const ctx = confettiCanvas.getContext('2d');
+
+        function showMessage() {
+            message.style.display = 'block';
+        }
+
+        // Configuració de confeti
+        let confettis = [];
+        const colors = ['#ff9a9e', '#fad0c4', '#fbc8d4', '#ffc3a0'];
+        const confettiCount = 100;
+
+        function launchConfetti() {
+            for (let i = 0; i < confettiCount; i++) {
+                confettis.push({
+                    x: Math.random() * confettiCanvas.width,
+                    y: Math.random() * confettiCanvas.height,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    radius: Math.random() * 5 + 2,
+                    speed: Math.random() * 3 + 1,
+                    angle: Math.random() * 360,
+                });
+            }
+        }
+
+        function resizeCanvas() {
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+        }
+
+        function drawConfetti() {
+            ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            confettis.forEach((confetti) => {
+                ctx.beginPath();
+                ctx.arc(confetti.x, confetti.y, confetti.radius, 0, 2 * Math.PI);
+                ctx.fillStyle = confetti.color;
+                ctx.fill();
+
+                confetti.y += confetti.speed;
+                if (confetti.y > confettiCanvas.height) confetti.y = -confetti.radius;
+            });
+            requestAnimationFrame(drawConfetti);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        drawConfetti();
+    </script>
+</body>
+</html>
